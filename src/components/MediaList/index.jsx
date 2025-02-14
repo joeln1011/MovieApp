@@ -1,28 +1,13 @@
-import { useEffect, useState } from "react";
-import MovieCard from "./MovieCard";
+import { useState } from "react";
+import MovieCard from "@components/MovieCard";
+import useFetch from "@hooks/useFetch";
 
 const MediaList = ({ title, tabs }) => {
-  const [mediaList, setMediaList] = useState([]);
   const [activeTabId, setActiveTabId] = useState(tabs[0]?.id);
+  const url = tabs.find((tab) => tab.id === activeTabId)?.url;
+  const { data } = useFetch({ url });
+  const mediaList = (data.results || []).slice(0, 12);
 
-  useEffect(() => {
-    const url = tabs.find((tab) => tab.id === activeTabId)?.url;
-    if (url) {
-      fetch(url, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhM2M1NjkzNWY3NWRkMGI1MjQ0MTgxYTFmNzRlZWRlYiIsIm5iZiI6MTczODg4NDUzMi4zNDUsInN1YiI6IjY3YTU0NWI0ZGYzMzZmMzhhYjg1ZDY1MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.iX_x6Rl2bS_91sRHl_iPYmGrW9If48SSB495H0zAYrI",
-        },
-      }).then(async (res) => {
-        const data = await res.json();
-        console.log({ data });
-        const trendingMediaList = data.results.slice(0, 12);
-        setMediaList(trendingMediaList);
-      });
-    }
-  }, [activeTabId, tabs]);
   return (
     <div className="bg-black px-8 py-10 text-[1.2vw] text-white">
       <div className="mb-6 flex items-center gap-4">
@@ -42,6 +27,7 @@ const MediaList = ({ title, tabs }) => {
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 lg:gap-6">
         {mediaList.map((media) => (
           <MovieCard
+            id={media.id}
             key={media.id}
             title={media.title || media.name}
             releaseDate={media.release_date || media.first_air_date}
