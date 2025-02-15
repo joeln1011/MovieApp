@@ -12,6 +12,7 @@ const MovieDetail = () => {
   const { data: movieInfo, isLoading } = useFetch({
     url: `/movie/${id}?append_to_response=release_dates,credits,videos`,
   });
+  console.log({ movieInfo });
 
   const { data: recommendationsResponse, isLoading: isRelatedMoviesLoading } =
     useFetch({
@@ -64,6 +65,7 @@ const MovieDetail = () => {
               mediaList={relatedMovies}
               isLoading={isRelatedMoviesLoading}
               title="More Like This"
+              className="mt-6"
             />
           </div>
           <div className="flex-1">

@@ -1,28 +1,26 @@
 import ImageComponent from "@components/Image";
 import RelatedMediaList from "@components/MediaDetail/RelatedMediaList";
+import { GENDER_MAPPING } from "@libs/constant";
 import { useLoaderData } from "react-router-dom";
 
-const PeoplePage = () => {
-  const GENDER_MAPPING = {
-    0: "Not set / not specified",
-    1: "Female",
-    2: "Male",
-    3: "Non-binary",
-  };
+export const PeoplePage = () => {
   const peopleInfo = useLoaderData();
 
   return (
-    <div>
+    <div className="bg-black text-[1.2vw] text-white">
       <div className="container">
         <div className="flex-1">
           <ImageComponent
             className="mb-6"
-            src={`https://media.themoviedb.org/t/p/w600_and_h900_bestv2${peopleInfo.profile_path}`}
+            src={
+              peopleInfo.profile_path &&
+              `https://media.themoviedb.org/t/p/w600_and_h900_bestv2${peopleInfo.profile_path}`
+            }
             width={600}
             height={900}
           />
           <div>
-            <p className="mb-6 text-lg font-bold">Personal Info</p>
+            <p className="mb-6 text-[1.3vw] font-bold">Personal Info</p>
             <div className="space-y-4">
               <div>
                 <p className="font-bold">Known For</p>
@@ -44,13 +42,16 @@ const PeoplePage = () => {
           </div>
         </div>
         <div className="flex-[2]">
-          <p className="mb-6 text-2xl font-bold">{peopleInfo.name}</p>
+          <p className="mb-6 text-[2vw] font-bold">{peopleInfo.name}</p>
           <div className="mb-6">
-            <p className="mb-4 text-lg font-bold">Biography</p>
+            <p className="mb-4 text-[1.4vw] font-bold">Biography</p>
             <p className="whitespace-pre-line">{peopleInfo.biography}</p>
           </div>
           <div>
-            <RelatedMediaList />
+            <RelatedMediaList
+              mediaList={peopleInfo.combined_credits?.cast || []}
+              title="Known For"
+            />
           </div>
         </div>
       </div>

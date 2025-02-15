@@ -11,7 +11,7 @@ const TVShowDetail = () => {
   const { id } = useParams();
 
   const { data: tvInfo, isLoading } = useFetch({
-    url: `/tv/${id}?append_to_response=content_ratings,aggregate_credits,videos `,
+    url: `/tv/${id}?append_to_response=content_ratings,aggregate_credits,videos`,
   });
 
   const { data: recommendationsResponse, isLoading: isRecommandationLoading } =
@@ -72,6 +72,7 @@ const TVShowDetail = () => {
               mediaList={relatedTVShow}
               isLoading={isRecommandationLoading}
               title="More Like This"
+              className="mt-6"
             />
           </div>
           <div className="flex-1">

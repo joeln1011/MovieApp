@@ -1,14 +1,20 @@
-import { createRoot } from "react-dom/client";
 import "./index.css";
-//import App from "./pages/HomePage.jsx";
+import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import TVshowDetail from "@pages/TVshowDetail";
+import { lazy } from "react";
+//import TVshowDetail from "@pages/TVshowDetail";
 import RootPlayout from "@pages/RootPlayout";
-import HomePage from "@pages/HomePage";
-import MovieDetail from "@pages/MovieDetail";
+// import HomePage from "@pages/HomePage";
+// import MovieDetail from "@pages/MovieDetail";
 import ModalProvider from "@context/ModalProvider";
-import PeoplePage from "@pages/PeoplePage";
+// import PeoplePage from "@pages/PeoplePage";
+// import SearchPage from "@pages/SearchPage";
+
+const HomePage = lazy(() => import("@pages/HomePage"));
+const MovieDetail = lazy(() => import("@pages/MovieDetail"));
+const TVshowDetail = lazy(() => import("@pages/TVshowDetail"));
+const SearchPage = lazy(() => import("@pages/SearchPage"));
+const PeoplePage = lazy(() => import("@pages/PeoplePage"));
 
 const router = createBrowserRouter([
   {
@@ -31,7 +37,7 @@ const router = createBrowserRouter([
         element: <PeoplePage />,
         loader: async ({ params }) => {
           const res = await fetch(
-            `https://api.themoviedb.org/3/person/${params.id}`,
+            `https://api.themoviedb.org/3/person/${params.id}?append_to_response=combined_credits`,
             {
               headers: {
                 accept: "application/json",
@@ -41,6 +47,10 @@ const router = createBrowserRouter([
           );
           return res;
         },
+      },  
+      {
+        path: "/search",
+        element: <SearchPage />,
       },
     ],
   },
