@@ -28,7 +28,7 @@ const GenresInput = ({ control, onChange, value = [] }) => {
             } else {
               newValue = [...newValue, genre.id];
             }
-            onChange(newValue); 
+            onChange(newValue);
           }}
         >
           {genre.name}

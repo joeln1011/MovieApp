@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 const SearchForm = ({ setSearchFormValues }) => {
   const [searchParams] = useSearchParams();
   const mediaType = searchParams.get("mediaType");
-  console.log({ mediaType });
+
   const { handleSubmit, control, watch } = useForm({
     defaultValues: {
       mediaType: ["tv", "movie"].includes(mediaType) ? mediaType : "movie",
@@ -17,12 +17,12 @@ const SearchForm = ({ setSearchFormValues }) => {
       rating: "All",
     },
   });
+  const formValues = watch();
+  console.log({ formValues });
+
   const onSubmit = (data) => {
     console.log({ formData: data });
   };
-
-  const formValues = watch();
-  console.log({ formValues });
 
   useEffect(() => {
     setSearchFormValues(formValues);

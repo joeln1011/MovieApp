@@ -8,7 +8,6 @@ import useFetch from "@hooks/useFetch";
 
 const MovieDetail = () => {
   const { id } = useParams();
-
   const { data: movieInfo, isLoading } = useFetch({
     url: `/movie/${id}?append_to_response=release_dates,credits,videos`,
   });
@@ -34,11 +33,7 @@ const MovieDetail = () => {
   if (isLoading) {
     return <Loading />;
   }
-  // const movietemp = { trailerVideoKey=
-  //   (movieInfo.videos?.results || []).find(
-  //     (video) => video.type === "Trailer",
-  //   )?.key
-  // }
+
   return (
     <div>
       <Banner

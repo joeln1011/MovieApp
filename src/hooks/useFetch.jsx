@@ -35,5 +35,6 @@ export default function useFetch(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, method, JSON.stringify(headers), enabled]);
+
   return { isLoading, data };
 }

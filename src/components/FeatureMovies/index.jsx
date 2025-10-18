@@ -6,6 +6,7 @@ import useFetch from "@hooks/useFetch";
 //
 const FeatureMovies = () => {
   const [activeMovieId, setActiveMovieId] = useState();
+
   const { data: popularMoviesResponse } = useFetch({
     url: "/discover/movie?include_adult=false&language=en-US&page=1&sort_by=popularity.desc&include_video=true",
   });
@@ -48,6 +49,7 @@ const FeatureMovies = () => {
             }
           />
         ))}
+
       <PaginateIndicator
         movies={movies}
         activeMovieId={activeMovieId}
