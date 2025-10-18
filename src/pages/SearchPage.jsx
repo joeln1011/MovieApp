@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const SearchPage = () => {
   const [searchFormValues, setSearchFormValues] = useState({
-    mediaType: "movie",
+    mediaType: "tv",
     genres: [],
     rating: "All",
   });
@@ -16,10 +16,10 @@ const SearchPage = () => {
       : searchFormValues.rating.split(" - ");
 
   const { data } = useFetch({
-    url: `/discover/${searchFormValues.mediaType}?sort_by=&popularity.desc?with_genres=${searchFormValues.genres.join(",")}&vote_average.gte=${minRating / 10}&vote_average.lte=${maxRating / 10}`,
+    url: `/discover/${searchFormValues.mediaType}?sort_by=popularity.desc&with_genres=${searchFormValues.genres.join(",")}&vote_average.gte=${minRating / 10}&vote_average.lte=${maxRating / 10}`,
   });
 
-  console.log({ data });
+  console.log({ searchFormValues, data });
 
   return (
     <div className="container flex-col">
@@ -29,7 +29,10 @@ const SearchPage = () => {
           <SearchForm setSearchFormValues={setSearchFormValues} />
         </div>
         <div className="flex-[3]">
-          <RelatedMediaList mediaList={data.results || []} />
+          <RelatedMediaList
+            mediaList={data.results}
+            mediaType={searchFormValues.mediaType}
+          />
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ const MediaList = ({ title, tabs }) => {
   const url = tabs.find((tab) => tab.id === activeTabId)?.url;
   const { data } = useFetch({ url });
   const mediaList = (data.results || []).slice(0, 12);
-
+  
   return (
     <div className="bg-black px-8 py-10 text-[1.2vw] text-white">
       <div className="mb-6 flex items-center gap-4">
